@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Content Page</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; margin: 0; }
+        
+        /* ROW 1: Title */
+        .header { padding: 20px; text-align: center; background: #f4f4f4; border-bottom: 1px solid #ccc; }
+
+        /* ROW 2: Buttons */
+        .nav { display: flex; justify-content: center; gap: 10px; padding: 15px; background: #fff; }
+        
+        button { 
+            padding: 10px 20px; 
+            cursor: pointer; 
+            border: 1px solid #007bff; 
+            background: white; 
+            color: #007bff; 
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        button:hover { background: #e7f3ff; }
+
+        /* The "Stay Highlighted" Style */
+        button.active { 
+            background: #007bff; 
+            color: white; 
+        }
+
+        /* ROW 3: Content Area */
+        .content-area { flex-grow: 1; border: none; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>TPWSD Assessment</h1>
+	<h2>May 2026</h2>
+    </div>
+
+    <div class="nav">
+        <!-- Added 'id' to the default button so we can highlight it on start -->
+        <button id="default-btn" onclick="loadPage(this, 'https://mapfeats.github.io/Assessment_List/')">Shorefront Owner Fees</button>
+        <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_Methods/')">Methods</button>
+        <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_ExplainFee/')">Fee Calculation</button>
+        <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_FAQ/')">FAQ</button>
+    </div>
+
+    <iframe id="display-frame" class="content-area" src="https://mapfeats.github.io/Assessment_List/"></iframe>
+
+    <script>
+        function loadPage(element, url) {
+            // 1. Change the iframe source
+            document.getElementById('display-frame').src = url;
+
+            // 2. Remove 'active' class from all buttons
+            const buttons = document.querySelectorAll('.nav button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // 3. Add 'active' class to the clicked button
+            element.classList.add('active');
+        }
+
+        // Highlight the default button when the page first loads
+        window.onload = function() {
+            document.getElementById('default-btn').classList.add('active');
+        };
+    </script>
+
+</body>
+</html>
