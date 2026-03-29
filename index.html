@@ -196,26 +196,29 @@
 
     <script>
         function loadPage(element, url) {
-            let finalUrl = url;
+    let finalUrl = url;
 
-            if (url.toLowerCase().endsWith('.pdf')) {
-                const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-                if (isMobile) {
-                    finalUrl = 'pdfjs/web/viewer.html?file=../../' + url + '#view=FitH&pagemode=none';
-                } else {
-                    finalUrl = url + '#toolbar=0&navpanes=0&view=FitH';
-                }
-            }
-
-            document.getElementById('display-frame').src = finalUrl;
-
-            // Handle button styling if a button element was passed
-            if (element) {
-                const buttons = document.querySelectorAll('.nav button');
-                buttons.forEach(btn => btn.classList.remove('active'));
-                element.classList.add('active');
-            }
+    if (url.toLowerCase().endsWith('.pdf')) {
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // Mobile: PDF.js using #view=Fit to show the whole page at once
+            finalUrl = 'pdfjs/web/viewer.html?file=../../' + url + '#view=Fit&pagemode=none';
+        } else {
+            // Desktop: Native viewer using #view=Fit to prevent the "too wide" issue
+            finalUrl = url + '#toolbar=0&navpanes=0&view=Fit';
         }
+    }
+
+    document.getElementById('display-frame').src = finalUrl;
+
+    if (element) {
+        const buttons = document.querySelectorAll('.nav button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+    }
+}
+
 
         // Initialize page
         window.onload = function() {
