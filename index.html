@@ -1,73 +1,214 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TPWSD Assessment Web Page</title>
     <style>
-        body { font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; margin: 0; }
+        /* BASE LAYOUT */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden; 
+        }
         
-        /* ROW 1: Title */
-        .header { padding: 2px; text-align: center; background: #f4f4f4; border-bottom: 1px solid #ccc; }
+        /* ROW 1: HEADER */
+        .header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 5px 10px; 
+            background: #f8f9fa; 
+            border-bottom: 1px solid #dee2e6; 
+        }
 
-        /* ROW 2: Buttons */
-        .nav { display: flex; justify-content: center; gap: 10px; padding: 15px; background: #fff; }
+        .header-left { width: 400px; } /* Spacer to balance title */
         
-        button { 
-            padding: 10px 20px; 
+        .header h3 { 
+            margin: 0; 
+            flex-grow: 1; 
+            text-align: center; 
+            font-size: 1.2rem; 
+            color: SeaGreen;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            gap: 8px; 
+            width: 400px; 
+        }
+
+        .header-button-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* ROW 1 BUTTONS */
+        .help-btn, .external-btn { 
+            padding: 4px 8px; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            font-size: 11px;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        .help-btn { background-color: #6c757d; }
+        .external-btn { background-color: #005e95; }
+        .help-btn:hover, .external-btn:hover { opacity: 0.85; }
+
+        .mobile-warning {
+            font-size: 10px;
+            color: #d9534f;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ROW 2: NAVIGATION */
+        .nav { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 15px; 
+            padding: 15px; 
+            background: #ffffff; 
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #666;
+            text-align: right;
+            padding-right: 10px;
+            border-right: 2px solid #007bff;
+            line-height: 1.2;
+        }
+
+        .grid-2x2 {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-column { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 6px; 
+        }
+
+        .nav-row { 
+            display: flex; 
+            gap: 10px; 
+        }
+
+        /* SHARED BUTTON STYLES */
+        .nav button { 
+            padding: 6px 15px; 
             cursor: pointer; 
             border: 1px solid #007bff; 
             background: white; 
             color: #007bff; 
             border-radius: 4px;
-            transition: 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
         }
 
-        button:hover { background: #e7f3ff; }
+        .block-btn { width: 130px; }
 
-        /* The "Stay Highlighted" Style */
-        button.active { 
+        .nav button:hover { background: #f0f7ff; }
+
+        .nav button.active { 
             background: #007bff; 
             color: white; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* ROW 3: Content Area */
-        .content-area { flex-grow: 1; border: none; width: 100%; }
+        .divider {
+            width: 1px;
+            height: 50px;
+            background-color: #dee2e6;
+            margin: 0 10px;
+        }
+
+        /* ROW 3: CONTENT */
+        .content-area { 
+            flex-grow: 1; 
+            border: none; 
+            width: 100%; 
+            background: #fff;
+        }
     </style>
 </head>
 <body>
 
+    <!-- ROW 1 -->
     <div class="header">
+        <div class="header-left"></div>
         <h3>TPWSD Assessment -- May 2026</h3>
-	    </div>
-
-    <div class="nav">
-        <!-- Added 'id' to the default button so we can highlight it on start -->
-        <button id="default-btn" onclick="loadPage(this, 'https://mapfeats.github.io/Assessment_List/')">Shorefront Owner Fees</button>
-        <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_Methods/')">Methods</button>
-        <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_ExplainFee/')">Fee Calculation</button>
-        <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_FAQ/')">FAQ</button>
+        <div class="header-right">
+            <div class="header-button-group">
+                <a href="help-navigation.html" target="_blank" class="help-btn">How to Navigate Dashboard</a>
+                <a href="https://tpwsd-assess-bsumaps.hub.arcgis.com" target="_blank" class="external-btn">Open ESRI Dashboard ↗</a>
+            </div>
+            <span class="mobile-warning">⚠️ Map Application NOT designed for mobile devices</span>
+        </div>
     </div>
 
+    <!-- ROW 2 -->
+    <div class="nav">
+        <div class="nav-label">Shorefront<br>Owner Fees</div>
+
+        <div class="grid-2x2">
+            <div class="nav-column">
+                <button id="default-btn" class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_BH.pdf')">Blue Hill</button>
+                <button class="block-btn" onclick="loadPage(this, 'page2.html')">Orland</button>
+            </div>
+            <div class="nav-column">
+                <button class="block-btn" onclick="loadPage(this, 'page3.html')">Penobscot</button>
+                <button class="block-btn" onclick="loadPage(this, 'https://mapfeats.github.io/Assessment_List/'')">Surry</button>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="nav-row">
+            <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_Methods/')">Methods</button>
+            <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_ExplainFee/')">Fee Explanation</button>
+            <button onclick="loadPage(this, 'https://mapfeats.github.io/TPWSD_FAQ/')">FAQ</button>
+        </div>
+    </div>
+
+    <!-- ROW 3 -->
     <iframe id="display-frame" class="content-area" src="https://mapfeats.github.io/Assessment_List/"></iframe>
 
     <script>
         function loadPage(element, url) {
-            // 1. Change the iframe source
+            // Update iframe source
             document.getElementById('display-frame').src = url;
 
-            // 2. Remove 'active' class from all buttons
+            // Update active button styling
             const buttons = document.querySelectorAll('.nav button');
             buttons.forEach(btn => btn.classList.remove('active'));
-
-            // 3. Add 'active' class to the clicked button
             element.classList.add('active');
         }
 
-        // Highlight the default button when the page first loads
+        // Initialize active state on load
         window.onload = function() {
             document.getElementById('default-btn').classList.add('active');
         };
     </script>
-
 </body>
 </html>
+
+Do you need any help with the content within the help page or the default home page?
+
