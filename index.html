@@ -192,20 +192,27 @@
     <iframe id="display-frame" class="content-area" src="TPWSD_Parcels_BH.pdf#toolbar=0&navpanes=0'"></iframe>
 
     <script>
-        function loadPage(element, url) {
-            // Update iframe source
-            document.getElementById('display-frame').src = url;
+	function loadPage(element, url) {
+    		let finalUrl = url;
 
-            // Update active button styling
-            const buttons = document.querySelectorAll('.nav button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-        }
+    	// Check if the URL is a PDF file
+    	if (url.toLowerCase().endsWith('.pdf')) {
+      	  // Construct the full URL to your file on GitHub Pages
+       	  // This takes your current address (e.g., https://user.github.io) and adds the PDF filename
+       	  const publicFileUrl = window.location.href.replace(/index\.html$/, '') + url;
+        
+        // Wrap the file URL with the Google Docs Viewer
+        finalUrl = 'https://docs.google.com' + encodeURIComponent(publicFileUrl) + '&embedded=true';
+    }
 
-        // Initialize active state on load
-        window.onload = function() {
-            document.getElementById('default-btn').classList.add('active');
-        };
+    // Load the final URL into your Row 3 iframe
+    document.getElementById('display-frame').src = finalUrl;
+
+    // Update button active states
+    const buttons = document.querySelectorAll('.nav button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    element.classList.add('active');
+}
     </script>
 </body>
 </html>
