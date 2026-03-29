@@ -170,12 +170,12 @@
 
         <div class="grid-2x2">
             <div class="nav-column">
-                <button id="default-btn" class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_BH.pdf')">Blue Hill</button>
-                <button class="block-btn" onclick="loadPage(this, 'page2.html')">Orland</button>
+                <button id="default-btn" class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_BH.pdf#toolbar=0&navpanes=0')">Blue Hill</button>
+                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Orland.pdf#toolbar=0&navpanes=0')">Orland</button>
             </div>
             <div class="nav-column">
-                <button class="block-btn" onclick="loadPage(this, 'page3.html')">Penobscot</button>
-                <button class="block-btn" onclick="loadPage(this, 'https://mapfeats.github.io/Assessment_List/'')">Surry</button>
+                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Penobscot.pdf#toolbar=0&navpanes=0')">Penobscot</button>
+                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Surry.pdf#toolbar=0&navpanes=0')">Surry</button>
             </div>
         </div>
 
@@ -189,7 +189,7 @@
     </div>
 
     <!-- ROW 3 -->
-    <iframe id="display-frame" class="content-area" src="https://mapfeats.github.io/Assessment_List/"></iframe>
+    <iframe id="display-frame" class="content-area" src="TPWSD_Parcels_BH.pdf#toolbar=0&navpanes=0'"></iframe>
 
     <script>
         function loadPage(element, url) {
