@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0, user-scalable=yes">
     <title>TPWSD Assessment Web Page</title>
     <style>
         /* BASE LAYOUT */
@@ -26,7 +25,7 @@
             border-bottom: 1px solid #dee2e6; 
         }
 
-        .header-left { width: 400px; } /* Spacer to balance title */
+        .header-left { width: 400px; } 
         
         .header h3 { 
             margin: 0; 
@@ -110,7 +109,6 @@
             gap: 10px; 
         }
 
-        /* SHARED BUTTON STYLES */
         .nav button { 
             padding: 6px 15px; 
             cursor: pointer; 
@@ -124,9 +122,7 @@
         }
 
         .block-btn { width: 130px; }
-
         .nav button:hover { background: #f0f7ff; }
-
         .nav button.active { 
             background: #007bff; 
             color: white; 
@@ -148,17 +144,12 @@
             background: #fff;
         }
 
-/* Prevents mobile browsers from showing edit/select popups in the iframe */
-#display-frame {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    touch-action: pan-x pan-y; /* Allows scrolling but blocks long-press menus */
-}
-
+        /* Mobile Protections */
+        #display-frame {
+            -webkit-touch-callout: none;
+            user-select: none;
+            touch-action: manipulation; 
+        }
     </style>
 </head>
 <body>
@@ -180,18 +171,14 @@
     <div class="nav">
         <div class="nav-label">Shorefront<br>Owner Fees</div>
 
-        <div class="grid-3x3">
+        <div class="grid-2x2">
             <div class="nav-column">
-		<button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_BH.pdf')">
-   			 View PDF
-		</button>
-		
-                <button id="default-btn" class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_BH.pdf#toolbar=0&navpanes=0')">Blue Hill</button>
-                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Orland.pdf#toolbar=0&navpanes=0')">Orland</button>
+                <button id="default-btn" class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_BH.pdf')">Blue Hill</button>
+                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Orland.pdf')">Orland</button>
             </div>
             <div class="nav-column">
-                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Penobscot.pdf#toolbar=0&navpanes=0')">Penobscot</button>
-                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Surry.pdf#toolbar=0&navpanes=0')">Surry</button>
+                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Penobscot.pdf')">Penobscot</button>
+                <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Surry.pdf')">Surry</button>
             </div>
         </div>
 
@@ -205,34 +192,48 @@
     </div>
 
     <!-- ROW 3 -->
-    <iframe id="display-frame" class="content-area" src="TPWSD_Parcels_BH.pdf#toolbar=0&navpanes=0'"></iframe>
+    <iframe id="display-frame" class="content-area"></iframe>
 
     <script>
-function loadPage(element, url) {
-    let finalUrl = url;
+        function loadPage(element, url) {
+            let finalUrl = url;
 
-    if (url.toLowerCase().endsWith('.pdf')) {
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        
-        if (isMobile) {
-            // Points to your hosted viewer.html
-            // We use the CSS fix in viewer.css to handle the toolbar hiding
-            finalUrl = 'pdfjs/web/viewer.html?file=../../' + url;
-        } else {
-            // Desktop still uses native viewer parameters
-            finalUrl = url + '#toolbar=0&navpanes=0';
+            if (url.toLowerCase().endsWith('.pdf')) {
+                const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                if (isMobile) {
+                    finalUrl = 'pdfjs/web/viewer.html?file=../../' + url + '#view=FitH&pagemode=none';
+                } else {
+                    finalUrl = url + '#toolbar=0&navpanes=0&view=FitH';
+                }
+            }
+
+            document.getElementById('display-frame').src = finalUrl;
+
+            // Handle button styling if a button element was passed
+            if (element) {
+                const buttons = document.querySelectorAll('.nav button');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                element.classList.add('active');
+            }
         }
-    }
 
-    document.getElementById('display-frame').src = finalUrl;
+        // Initialize page
+        window.onload = function() {
+            const defaultBtn = document.getElementById('default-btn');
+            loadPage(defaultBtn, 'TPWSD_Parcels_BH.pdf');
+        };
 
-    const buttons = document.querySelectorAll('.nav button');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    element.classList.add('active');
-}
+        // Double-tap zoom protection
+        const iframe = document.getElementById('display-frame');
+        let lastTap = 0;
+        iframe.addEventListener('touchstart', function(e) {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 300 && tapLength > 0) {
+                e.preventDefault(); 
+            }
+            lastTap = currentTime;
+        });
     </script>
 </body>
 </html>
-
-Do you need any help with the content within the help page or the default home page?
-
