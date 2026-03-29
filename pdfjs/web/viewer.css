@@ -8807,3 +8807,12 @@ dialog :link{
     display:none;
   }
 }
+/* Force hide the entire top toolbar */
+#toolbarContainer, .toolbar {
+    display: none !important;
+}
+
+/* Optional: Remove the top margin so the PDF fills the space */
+#viewerContainer {
+    top: 0 !important;
+}
