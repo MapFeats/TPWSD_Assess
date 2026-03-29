@@ -215,13 +215,11 @@ function loadPage(element, url) {
         const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         
         if (isMobile) {
-            // Point to your hosted viewer.html and pass the PDF filename as a 'file' parameter
-            // The '../../' helps the viewer find the PDF in your root folder
-	    // Add '#toolbar=0' at the end of the URL
-	    finalUrl = 'pdfjs/web/viewer.html?file=../../' + url + '#toolbar=0';
-
-                    } else {
-            // Keep native desktop viewing
+            // Points to your hosted viewer.html
+            // We use the CSS fix in viewer.css to handle the toolbar hiding
+            finalUrl = 'pdfjs/web/viewer.html?file=../../' + url;
+        } else {
+            // Desktop still uses native viewer parameters
             finalUrl = url + '#toolbar=0&navpanes=0';
         }
     }
