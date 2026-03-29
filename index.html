@@ -168,8 +168,12 @@
     <div class="nav">
         <div class="nav-label">Shorefront<br>Owner Fees</div>
 
-        <div class="grid-2x2">
+        <div class="grid-3x3">
             <div class="nav-column">
+		
+		<button class="block-btn" onclick="loadPage(this,'https://mapfeats.github.io/TPWSD_Assess/TPWSD_Parcels_BH.pdf')">
+    			View PDF
+		</button>
                 <button id="default-btn" class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_BH.pdf#toolbar=0&navpanes=0')">Blue Hill</button>
                 <button class="block-btn" onclick="loadPage(this, 'TPWSD_Parcels_Orland.pdf#toolbar=0&navpanes=0')">Orland</button>
             </div>
@@ -192,23 +196,27 @@
     <iframe id="display-frame" class="content-area" src="TPWSD_Parcels_BH.pdf#toolbar=0&navpanes=0'"></iframe>
 
     <script>
-	function loadPage(element, url) {
-    		let finalUrl = url;
+function loadPage(element, url) {
+    let finalUrl = url;
 
-    	// Check if the URL is a PDF file
-    	if (url.toLowerCase().endsWith('.pdf')) {
-      	  // Construct the full URL to your file on GitHub Pages
-       	  // This takes your current address (e.g., https://user.github.io) and adds the PDF filename
-       	  const publicFileUrl = window.location.href.replace(/index\.html$/, '') + url;
-        
-        // Wrap the file URL with the Google Docs Viewer
-        finalUrl = 'https://docs.google.com' + encodeURIComponent(publicFileUrl) + '&embedded=true';
+    if (url.toLowerCase().endsWith('.pdf')) {
+        // Detect if the user is on a mobile device (Android, iPhone, etc.)
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // Use Google Viewer ONLY for mobile to prevent download prompts
+            const publicFileUrl = 'https://mapfeats.github.io' + url.split('/').pop();
+            finalUrl = 'https://docs.google.com' + encodeURIComponent(publicFileUrl) + '&embedded=true';
+        } else {
+            // Use the native browser viewer for Desktop (it's faster and clearer)
+            // We add the #toolbar=0 here to keep it clean as we discussed before
+            finalUrl = url + '#toolbar=0&navpanes=0';
+        }
     }
 
-    // Load the final URL into your Row 3 iframe
     document.getElementById('display-frame').src = finalUrl;
 
-    // Update button active states
+    // Update active button styling
     const buttons = document.querySelectorAll('.nav button');
     buttons.forEach(btn => btn.classList.remove('active'));
     element.classList.add('active');
