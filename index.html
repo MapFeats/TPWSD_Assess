@@ -136,13 +136,15 @@
             margin: 0 10px;
         }
 
-        /* ROW 3: CONTENT */
-        .content-area { 
-            flex-grow: 1; 
-            border: none; 
-            width: 100%; 
-            background: #fff;
-        }
+	/* ROW 3: CONTENT AREA with subtle border */
+	.content-area { 
+	    flex-grow: 1; 
+ 	   border: none; 
+ 	   border-top: 2px solid #dee2e6; /* Subtle grey line to separate from Row 2 */
+ 	   width: 100%; 
+ 	   background: #f1f3f5; /* Very light grey to make the white PDF "pop" */
+ 	   display: block;
+	}
 
         /* Mobile Protections */
         #display-frame {
@@ -150,6 +152,17 @@
             user-select: none;
             touch-action: manipulation; 
         }
+
+	/* Center the iframe content vertically and horizontally */
+	.content-area { 
+	    flex-grow: 1; 
+	    border: none; 
+	    width: 100%; 
+	    background: #ebebeb; /* Light grey background to frame the content */
+ 	   display: block;
+ 	   margin: 0 auto;
+	}
+
     </style>
 </head>
 <body>
