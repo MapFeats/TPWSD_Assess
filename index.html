@@ -178,18 +178,18 @@
     <iframe id="display-frame" class="content-area"></iframe>
 
     <script>
-        function loadPage(element, url) {
+ function loadPage(element, url) {
     let finalUrl = url;
 
     if (url.toLowerCase().endsWith('.pdf')) {
         const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         
         if (isMobile) {
-            // Mobile: PDF.js using #view=Fit to show the whole page at once
-            finalUrl = 'pdfjs/web/viewer.html?file=../../' + url + '#zoom=65&pagemode=none';
+            // Using 60% zoom for mobile
+            finalUrl = 'pdfjs/web/viewer.html?file=../../' + url + '#zoom=60&pagemode=none';
         } else {
-            // Desktop: Native viewer using #view=Fit to prevent the "too wide" issue
-            finalUrl = url + '#toolbar=0&navpanes=0&view=Fit';
+            // Using 60% zoom for desktop native viewer
+            finalUrl = url + '#toolbar=0&navpanes=0#zoom=60';
         }
     }
 
