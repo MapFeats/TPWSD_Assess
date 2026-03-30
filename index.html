@@ -4,166 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0, user-scalable=yes">
     <title>TPWSD Assessment Web Page</title>
-    <style>
-        /* BASE LAYOUT */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            height: 100vh; 
-            margin: 0; 
-            overflow: hidden; 
-        }
+  <style>
+    /* BASE LAYOUT */
+    body { 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        display: flex; 
+        flex-direction: column; 
+        height: 100vh; 
+        margin: 0; 
+        overflow: hidden; 
+    }
+    
+    /* ROW 1: HEADER */
+    .header { 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        padding: 5px 10px; 
+        background: #f8f9fa; 
+        border-bottom: 1px solid #dee2e6; 
+    }
+
+    .header-left, .header-right { width: 30%; } 
+    
+    .header h3 { 
+        margin: 0; 
+        flex-grow: 1; 
+        text-align: center; 
+        font-size: 1.1rem; 
+        color: SeaGreen;
+        white-space: nowrap;
+    }
+
+    .header-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        gap: 5px; 
+    }
+
+    .header-button-group { display: flex; gap: 8px; }
+
+    .help-btn, .external-btn { 
+        padding: 4px 8px; 
+        color: white; 
+        text-decoration: none; 
+        border-radius: 4px; 
+        font-size: 11px;
+        font-weight: bold;
+    }
+    .help-btn { background-color: #6c757d; }
+    .external-btn { background-color: #005e95; }
+
+    .mobile-warning { font-size: 9px; color: #d9534f; font-weight: bold; }
+
+    /* ROW 2: NAVIGATION */
+    .nav { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px; 
+        padding: 10px; 
+        background: #ffffff; 
+        border-bottom: 1px solid #dee2e6;
+        flex-wrap: wrap; /* Allows wrapping on small screens */
+    }
+
+    .nav-label {
+        font-size: 10px;
+        font-weight: bold;
+        color: #666;
+        padding-right: 8px;
+        border-right: 2px solid #007bff;
+    }
+
+    .grid-2x2 { display: flex; gap: 5px; }
+    .nav-column { display: flex; flex-direction: column; gap: 4px; }
+    .nav-row { display: flex; gap: 5px; }
+
+    .nav button { 
+        padding: 5px 10px; 
+        cursor: pointer; 
+        border: 1px solid #007bff; 
+        background: white; 
+        color: #007bff; 
+        border-radius: 4px;
+        font-size: 12px;
+    }
+
+    .block-btn { width: 110px; }
+    .nav button.active { background: #007bff; color: white; }
+
+    .divider { width: 1px; height: 40px; background-color: #dee2e6; }
+
+    /* ROW 3: CONTENT */
+    .content-area { 
+        flex-grow: 1; 
+        border: none; 
+        border-top: 2px solid #dee2e6;
+        width: 100%; 
+        background: #f1f3f5;
+    }
+
+    /* ========================================== */
+    /* MOBILE SPECIFIC OVERRIDES (Screens < 768px) */
+    /* ========================================== */
+    @media (max-width: 768px) {
+        /* Hide Row 1 Buttons and Warning on Mobile */
+        .header-left, .header-right { display: none; }
         
-        /* ROW 1: HEADER */
-        .header { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 5px 10px; 
-            background: #f8f9fa; 
-            border-bottom: 1px solid #dee2e6; 
-        }
+        .header h3 { width: 100%; text-align: center; font-size: 1rem; }
 
-        .header-left { width: 400px; } 
+        /* Shrink Row 2 for Mobile */
+        .nav { padding: 8px; gap: 5px; justify-content: space-around; }
+        .nav-label { font-size: 9px; padding-right: 5px; }
         
-        .header h3 { 
-            margin: 0; 
-            flex-grow: 1; 
-            text-align: center; 
-            font-size: 1.2rem; 
-            color: SeaGreen;
-        }
+        .block-btn { width: 85px; font-size: 11px; padding: 4px 5px; }
+        .nav-row button { font-size: 11px; padding: 4px 8px; }
+        
+        .divider { margin: 0 5px; }
 
-        .header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-            gap: 8px; 
-            width: 400px; 
-        }
-
-        .header-button-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        /* ROW 1 BUTTONS */
-        .help-btn, .external-btn { 
-            padding: 4px 8px; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 4px; 
-            font-size: 11px;
-            font-weight: bold;
-            transition: opacity 0.2s;
-        }
-        .help-btn { background-color: #6c757d; }
-        .external-btn { background-color: #005e95; }
-        .help-btn:hover, .external-btn:hover { opacity: 0.85; }
-
-        .mobile-warning {
-            font-size: 10px;
-            color: #d9534f;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* ROW 2: NAVIGATION */
-        .nav { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 15px; 
-            padding: 15px; 
-            background: #ffffff; 
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .nav-label {
-            font-size: 11px;
-            font-weight: bold;
-            color: #666;
-            text-align: right;
-            padding-right: 10px;
-            border-right: 2px solid #007bff;
-            line-height: 1.2;
-        }
-
-        .grid-2x2 {
-            display: flex;
-            gap: 8px;
-        }
-
-        .nav-column { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 6px; 
-        }
-
-        .nav-row { 
-            display: flex; 
-            gap: 10px; 
-        }
-
-        .nav button { 
-            padding: 6px 15px; 
-            cursor: pointer; 
-            border: 1px solid #007bff; 
-            background: white; 
-            color: #007bff; 
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .block-btn { width: 130px; }
-        .nav button:hover { background: #f0f7ff; }
-        .nav button.active { 
-            background: #007bff; 
-            color: white; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .divider {
-            width: 1px;
-            height: 50px;
-            background-color: #dee2e6;
-            margin: 0 10px;
-        }
-
-	/* ROW 3: CONTENT AREA with subtle border */
-	.content-area { 
-	    flex-grow: 1; 
- 	   border: none; 
- 	   border-top: 2px solid #dee2e6; /* Subtle grey line to separate from Row 2 */
- 	   width: 100%; 
- 	   background: #f1f3f5; /* Very light grey to make the white PDF "pop" */
- 	   display: block;
-	}
-
-        /* Mobile Protections */
-        #display-frame {
-            -webkit-touch-callout: none;
-            user-select: none;
-            touch-action: manipulation; 
-        }
-
-	/* Center the iframe content vertically and horizontally */
-	.content-area { 
-	    flex-grow: 1; 
-	    border: none; 
-	    width: 100%; 
-	    background: #ebebeb; /* Light grey background to frame the content */
- 	   display: block;
- 	   margin: 0 auto;
-	}
-
-    </style>
+        /* Ensure Iframe fills width exactly */
+        .content-area { width: 100vw; }
+    }
+</style>
 </head>
 <body>
 
